@@ -1,0 +1,21 @@
+to do:
+
+-add post slice preview
+    -just rendering lines
+    -button to render mesh as well
+    -button to review print path
+
+-add stats and formatting to render window
+    -xyz bounds
+    -mesh to large/heavy warning
+    -mesh to large warning
+
+-make print path preview gui
+    -use for debug
+    -create display options
+
+-finish PolyLine.align
+-make G-Code
+
+-chop chop!
+
