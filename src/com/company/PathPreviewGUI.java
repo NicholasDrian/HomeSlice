@@ -10,7 +10,7 @@ public class PathPreviewGUI
         extends JFrame
         implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
 
-    private static JFrame previousFrame;
+    private static JFrame slicePreview;
     private static Container c;
     private static JButton backToSlicePreview;
     private static JLabel faceCount;
@@ -32,10 +32,10 @@ public class PathPreviewGUI
     private static boolean shiftPressed; //for panning
     private static boolean ctrlPressed; //for scaling
 
-    PathPreviewGUI(JFrame previous, Mesh Mesh, Map map) {
-        previousFrame = previous;
+    PathPreviewGUI(JFrame previous, Mesh Mesh, Map map, Rectangle Screen) {
+        slicePreview = previous;
         setTitle("HomeSlice -> Mesh Preview");
-        setBounds(300, 90, 900, 600);
+        setBounds(Screen);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
         mesh = Mesh;
@@ -120,9 +120,10 @@ public class PathPreviewGUI
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backToSlicePreview) {
-            dispose();
             camera = new Camera();
-            previousFrame.setVisible(true);
+            slicePreview.setBounds(getBounds());
+            slicePreview.setVisible(true);
+            dispose();
         }
     }
 
@@ -140,7 +141,7 @@ public class PathPreviewGUI
             Iterator<Double> zIter = printPath.keySet().iterator();
             Iterator<PolyLine[]> polys = printPath.values().iterator();
             while (zIter.hasNext()){
-                image = Draw.drawLines(camera, polys.next(), image, Color.BLACK, zIter.next());
+                image = Draw.drawLines(camera, polys.next(), image, NicksColors.DarkBlue, zIter.next());
             }
         }
         if (!drawBedFirst) {
@@ -189,18 +190,11 @@ public class PathPreviewGUI
     }
 
 
-    @Override
-    public void mouseDragged(MouseEvent e) {
+    @Override public void mouseDragged(MouseEvent e) {
         updateCamera(e.getX(), -e.getY());
     }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
+    @Override public void mouseMoved(MouseEvent e) { }
+    @Override public void keyTyped(KeyEvent e) { }
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -221,25 +215,11 @@ public class PathPreviewGUI
             ctrlPressed = false;
         }
     }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
+    @Override public void mouseClicked(MouseEvent e) { }
+    @Override public void mousePressed(MouseEvent e) { }
+    @Override public void mouseReleased(MouseEvent e) {
         previousDragPosition = null;
     }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
+    @Override public void mouseEntered(MouseEvent e) { }
+    @Override public void mouseExited(MouseEvent e) { }
 }

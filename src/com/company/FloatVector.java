@@ -1,7 +1,6 @@
 package com.company;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Arrays;
 
 import static java.lang.Math.*;
 
@@ -54,15 +53,6 @@ public class FloatVector {
         return result;
     }
 
-    public static FloatVector CrossProduct(FloatVector a, FloatVector b) {
-        float[] result = new float[a.Length];
-        for (int i = 0; i < a.Length; i++) {
-            result[i] = a.dimensions[(i + 1) % a.Length] * b.dimensions[(i + 2) % a.Length];
-            result[i] -= a.dimensions[(i + 2) % a.Length] * b.dimensions[(i + 1) % a.Length];
-        }
-        return new FloatVector(result);
-    }
-
     public static String ToString(FloatVector vector) {
         StringBuilder str = new StringBuilder("{");
         for (int i = 0; i <= vector.Length - 1; i++) {
@@ -85,44 +75,6 @@ public class FloatVector {
         return (float) pow(result, .5);
     }
 
-    public static float DistanceSquared(FloatVector a, FloatVector b){
-        float result = 0;
-        FloatVector c = FloatVector.Subtract(a,b);
-        for (float i : c.dimensions) {
-            result += pow(i, 2);
-        }
-        return result;
-    }
-
-    public static FloatVector[] sortByDimension(int Dimension, FloatVector[] Vectors){
-        if (Vectors.length == 1 || Vectors.length == 0) {
-            return Vectors;
-        } else {
-            int mid = (Vectors.length/2);
-            FloatVector[] firstHalf = sortByDimension(Dimension, Arrays.copyOfRange(Vectors, 0 , mid ));
-            FloatVector[] secondHalf = sortByDimension(Dimension, Arrays.copyOfRange(Vectors, mid , Vectors.length-1 ));
-            FloatVector[] sorted = new FloatVector[Vectors.length];
-            if (firstHalf[0].dimensions[Dimension] >= secondHalf[0].dimensions[Dimension]){
-                sorted = FloatVector.Merge(secondHalf, firstHalf);
-            } else {
-                sorted = FloatVector.Merge(firstHalf, secondHalf);
-            }
-            return sorted;
-        }
-    }
-
-    private static FloatVector[] Merge(FloatVector[] firstHalf, FloatVector[] secondHalf) {
-        int totalLength = firstHalf.length + secondHalf.length;
-        FloatVector[] result = new FloatVector [totalLength];
-        for (int i = 0; i < firstHalf.length; i ++){
-            result[i] = firstHalf[i];
-        }
-        for (int i = 0; i < secondHalf.length; i ++){
-            result[i+firstHalf.length] = secondHalf[i];
-        }
-        return result;
-    }
-
     public static FloatVector Normalize(FloatVector vect) {
         float scaleFactor = 1 / FloatVector.Magnitude(vect);
         for (int i = 0; i < vect.Length; i ++){
@@ -137,13 +89,6 @@ public class FloatVector {
             ans.dimensions[i] = num * vec.dimensions[i];
         }
         return ans;
-    }
-
-    public static FloatVector ScaleCentered(FloatVector vect, FloatVector center, float num) {
-        for (int i = 0; i < vect.Length; i++) {
-            vect.dimensions[i] = vect.dimensions[i] + ((vect.dimensions[i] - center.dimensions[i]) * (num - 1));
-        }
-        return vect;
     }
 
     public static FloatVector rotateVector(FloatVector vec, FloatVector axis, float theta) {
@@ -188,12 +133,6 @@ public class FloatVector {
         if ( projection > 0 ){
             return true;
         } return false;
-    }
-    //rotate a 2d point half way around another 2d point
-    public static FloatVector rotate180In2D(FloatVector point, FloatVector center){
-        float newX = center.dimensions[0] - (point.dimensions[0] - center.dimensions[0]);
-        float newY = center.dimensions[1] - (point.dimensions[1] - center.dimensions[1]);
-        return new FloatVector(newX, newY);
     }
 
     public float getZ(){

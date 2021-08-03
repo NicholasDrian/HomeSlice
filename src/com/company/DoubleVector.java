@@ -18,26 +18,10 @@ public class DoubleVector {
         dimensions = new double[] {a, b, c};
         Length = 3;
     }
-    public static String ToString(DoubleVector vector) {
-        StringBuilder str = new StringBuilder("{");
-        for (int i = 0; i <= vector.Length - 1; i++) {
-            str.append(round(vector.dimensions[i], 2) + ", ");
-        }
-        str.append("}");
-        return str.toString();
-    }
     public static BigDecimal round(double d, int decimalPlace) {
         BigDecimal bd = new BigDecimal(Double.toString(d));
         bd = bd.setScale(decimalPlace, RoundingMode.HALF_DOWN);
         return bd;
-    }
-    public static String ToStringUnrounded(DoubleVector vector) {
-        StringBuilder str = new StringBuilder("{");
-        for (int i = 0; i <= vector.Length - 1; i++) {
-            str.append(vector.dimensions[i] + ", ");
-        }
-        str.append("}");
-        return str.toString();
     }
     public static boolean equals(DoubleVector a, DoubleVector b){
         for (int i = 0; i < a.Length; i++){
@@ -45,5 +29,12 @@ public class DoubleVector {
                 return false;
             }
         } return true;
+    }
+    public static Double distance (DoubleVector a, DoubleVector b){
+        double result = 0;
+        for (int i = 0; i < a.Length; i++){
+            result += Math.pow(a.dimensions[i] - b.dimensions[i], 2);
+        }
+        return Math.sqrt(result);
     }
 }

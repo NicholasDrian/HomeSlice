@@ -20,11 +20,4 @@ public class PolyWithDistance {
         return poly;
     }
     public FloatVector getNormal(){ return normal;}
-
-    public static PolyWithDistance alignNormalToVec(PolyWithDistance poly, FloatVector vec){
-        if (FloatVector.angleBetween(vec, poly.normal) < (PI/2)){
-            poly.normal = FloatVector.Scale(poly.normal, -1);
-        }
-        return poly;
-    }
 }

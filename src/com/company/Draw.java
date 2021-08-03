@@ -24,10 +24,10 @@ public class Draw {
             g2d.drawLine(0, screenHorizonHeight, camera.res, screenHorizonHeight);
             g2d.setColor(NicksColors.TransparntBlue);
             g2d.fillRect(0, 0, camera.res, screenHorizonHeight);
-            g2d.setColor(NicksColors.DarkGreen);
+            g2d.setColor(NicksColors.BrightGreen);
             g2d.fillRect(0, screenHorizonHeight, camera.res, camera.res - screenHorizonHeight);
         } else if (screenHorizonHeight < 0) {
-            g2d.setColor(NicksColors.DarkGreen);
+            g2d.setColor(NicksColors.BrightGreen);
             g2d.fillRect(0, 0, camera.res, camera.res);
         } else {
             g2d.setColor(NicksColors.TransparntBlue);
@@ -84,10 +84,6 @@ public class Draw {
             }
         }
         Collections.sort(sortedPolys, Comparator.comparing(PolyWithDistance::getNegativeDistance));
-        /*for (PolyWithDistance poly : sortedPolys){
-            System.out.println(poly.getDistance());
-        }*/
-        g2d.setColor(NicksColors.TransparntBlue);
         //iterate using sorted list instead
         for (int i = 0; i < sortedPolys.size(); i++){
             g2d.setColor(NicksColors.colorByNormal(sortedPolys.get(i).getNormal()));
@@ -109,12 +105,12 @@ public class Draw {
         Line[] newLines = new Line[lines.length];
         for (int i = 0; i < lines.length; i++){
             FloatVector start = new FloatVector(
-                    (float)lines[i].points.get(0).dimensions[0],
-                    (float)lines[i].points.get(0).dimensions[1],
+                    (float)lines[i].start.dimensions[0],
+                    (float)lines[i].start.dimensions[1],
                     (float)z);
             FloatVector end = new FloatVector(
-                    (float)lines[i].points.get(1).dimensions[0],
-                    (float)lines[i].points.get(1).dimensions[1],
+                    (float)lines[i].end.dimensions[0],
+                    (float)lines[i].end.dimensions[1],
                     (float)z);
             newLines[i] = new Line(start, end);
         }

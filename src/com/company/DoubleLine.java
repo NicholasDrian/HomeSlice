@@ -30,19 +30,4 @@ public class DoubleLine {
         line.start = line.end;
         line.end = tempStart;
     }
-    public static String toString(DoubleLine line){
-        StringBuilder result = new StringBuilder();
-        result.append(DoubleVector.ToString(line.start));
-        result.append("\t");
-        result.append(DoubleVector.ToString(line.end));
-        return result.toString();
-    }
-    public static String toStringUnrounded(DoubleLine line){
-        StringBuilder result = new StringBuilder();
-        result.append(DoubleVector.ToStringUnrounded(line.start));
-        result.append("\t");
-        result.append(DoubleVector.ToStringUnrounded(line.end));
-        return result.toString();
-    }
-
 }

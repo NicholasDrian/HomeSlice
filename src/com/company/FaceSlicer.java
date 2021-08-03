@@ -12,7 +12,6 @@ public interface FaceSlicer {
         List<DoubleVector> pointsB = new ArrayList<>();
         if (face.flatEdgeCount == 0){
             //Slice face with sorted points and no flat edges
-            //System.out.println("here");
             //create edges
             Line longEdge = new Line(face.points[0], face.points[2]);
             Line shortEdgeTop = new Line(face.points[1], face.points[2]);
@@ -27,18 +26,10 @@ public interface FaceSlicer {
             //load intersections into their respective buffers
             for (DoubleVector point : longEdgeIntersections) {pointsA.add(point);}
             for (DoubleVector point : shortEdgeTopIntersections) {pointsB.add(point);}
-            //FIX THIS for loop - potential over flow error
-            //System.out.println("end of first list" + shortEdgeTopIntersections[shortEdgeTopIntersections.length-1].dimensions[2]);
-            //System.out.println("begining of second list" + shortEdgeBottomIntersections[0].dimensions[2]);
-            //need to deal wit possible emptyness
-            //if both top an bottom contain intersections
             if (shortEdgeTopIntersections.length > 0 && shortEdgeBottomIntersections.length > 0){
                 // if both top an bottom parts intersect
-                //System.out.println("here 1");
                 if (shortEdgeTopIntersections[shortEdgeTopIntersections.length - 1].dimensions[2] == shortEdgeBottomIntersections[0].dimensions[2]) {
                     //if last item of first list is repeat of first item of second list.
-                    //System.out.println("here 2");
-                    //if there are any non shared points in second list
                     for (int i = 1; i < shortEdgeBottomIntersections.length; i++) {
                         pointsB.add(shortEdgeBottomIntersections[i]);
                     }
@@ -73,15 +64,10 @@ public interface FaceSlicer {
         Iterator<DoubleVector> pointsAI = pointsA.iterator();
         Iterator<DoubleVector> pointsBI = pointsB.iterator();
         int length = pointsA.size();
-        //System.out.println(Face.toString(face));
-        //System.out.println(pointsA.size() + " " + pointsB.size());
         DoubleLine[] result = new DoubleLine[length];
         if (length > 0) {
             for (int i = 0; i < length; i++) {
                 result[i] = new DoubleLine(pointsAI.next(), pointsBI.next());
-            }
-            for (DoubleLine line : result) {
-                //System.out.println(DoubleLine.toString(line));
             }
         }
         return result;

@@ -12,7 +12,6 @@ public class Camera {
     FloatVector target;
     float lensLength;
     int res;
-
     float verticalRotation = 0;
     float horizontalRotation = 0;
     float scaleFactor = 1;
@@ -95,7 +94,7 @@ public class Camera {
         return camera;
     }
     public static Camera updatePosition(Camera camera, FloatVector motion){
-        camera.motion = FloatVector.Subtract(camera.motion, FloatVector.Scale(motion, 1/camera.scaleFactor));
+        camera.motion = FloatVector.Subtract(camera.motion, FloatVector.Scale(motion, 1/(camera.scaleFactor * 2)));
         return camera;
     }
     public static Camera updateCamera(Camera camera){
@@ -129,7 +128,6 @@ public class Camera {
         camera.topLeft = FloatVector.Move(camera.bottomLeft, screenVert, CameraDefault.lensYSize);
         //update screenPlane
         camera.screenPlane = new Plane(camera.DirectionNormalized, camera.bottomLeft);
-
         return camera;
     }
 

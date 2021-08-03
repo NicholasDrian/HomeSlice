@@ -20,12 +20,6 @@ public class Line {
         end = FloatVector.Move(start, direction, length);
     }
 
-    public static void sortPoints(Line line){
-        if (line.start.dimensions[2] < line.end.dimensions[2]){
-            Line.flipPoints(line);
-        }
-    }
-
     public static void flipPoints(Line line){
         FloatVector tempStart = new FloatVector(line.start.dimensions);
         line.start = line.end;
@@ -44,14 +38,6 @@ public class Line {
         double xStep = -(deltaX/deltaZ) * strokeHeight;
         double yStep = -(deltaY/deltaZ) * strokeHeight;
         double zStep = -strokeHeight;
-        //System.out.println(DoubleLine.toStringUnrounded(dummyLine));
-        //System.out.println("xStep : " + xStep);
-        //System.out.println("yStep : " + yStep);
-        //System.out.println("zStep : " + zStep);
-        //System.out.println("startZ" + startZ);
-        //System.out.println("strokeHeight: " + strokeHeight);
-        //System.out.println("startZ/strokeHeight: " + startZ/strokeHeight);
-        //System.out.println("startZ/strokeHeight mod 1: " + (startZ/strokeHeight) % 1);
         List<DoubleVector> intersections = new ArrayList<>();
         // if start is not an intersection, move to first intersection
         double verticalDistanceToFirstIntersection = ((startZ/strokeHeight) % 1)*strokeHeight;
@@ -90,22 +76,6 @@ public class Line {
         return bd;
     }
 
-    private static FloatVector weightedAveragePoint(Line line, float height) {
-        float[] result = new float[line.start.dimensions.length];
-        for (int i = 0; i < line.start.dimensions.length; i ++){
-            float dimSpan = line.start.dimensions[i] - line.end.dimensions[i];
-            float dimDistanceFromStartToInt = line.start.dimensions[i] - height;
-            float ratio = dimDistanceFromStartToInt / dimSpan;
-            result[i] = line.start.dimensions[i] - (dimSpan * ratio);
-        }
-        return new FloatVector(result);
-    }
-
-    public static void printLine (Line line){
-        System.out.println("\t\t\t( " + FloatVector.ToString(line.start) + " , " + FloatVector.ToString(line.end) + " )");
-    }
-
-    //makes grid based on print volume
    public static Line[] makeLineArray(Line line, FloatVector direction, float spacing, int count){
         FloatVector start = line.start;
         FloatVector end = line.end;

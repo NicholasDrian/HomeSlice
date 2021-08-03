@@ -212,7 +212,12 @@ public class STLParser {
                 }
             }
         }
-        Face [] faceArray = (Face[]) triangles.toArray();
+        Face[] faceArray = new Face[triangles.size()];
+        int inc = 0;
+        for (Face face : triangles){
+            faceArray[inc] = face;
+            inc++;
+        }
         Mesh meshObj = new Mesh("myMesh", faceArray);
         return meshObj;
     }
@@ -259,11 +264,7 @@ public class STLParser {
             }catch(Exception ex){
                 throw new IllegalArgumentException("Malformed STL binary at triangle number " + (triangles.size()+1), ex);
             }
-        }catch(IOException ex){
-            // IO exceptions are impossible with byte array input streams,
-            // but still need to be caught
-            Logger.getLogger(STLParser.class.getName()).log(Level.SEVERE, "HOLY SHIT! A ByteArrayInputStream threw an exception!", ex);
-        }
+        }catch(IOException ex){}
         Face[] faceArray = new Face[triangles.size()];
         int inc = 0;
         for (Face face : triangles){

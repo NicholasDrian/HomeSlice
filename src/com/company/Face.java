@@ -13,7 +13,6 @@ public class Face{
         normal = Normal;
     }
 
-
     public Face(FloatVector a, FloatVector b, FloatVector c){
         points = new FloatVector[]{a,b,c};
     }
@@ -39,13 +38,4 @@ public class Face{
             System.out.println(FloatVector.ToString(point));
         }
     }
-
-    public static String toString(Face face) {
-        StringBuilder result = new StringBuilder("Face:\n");
-        for (FloatVector point : face.points){
-            result.append(FloatVector.ToString(point) + "\n");
-        }
-        return result.toString();
-    }
-
 }

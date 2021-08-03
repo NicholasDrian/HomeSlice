@@ -8,7 +8,7 @@ public class MeshPreviewGUI
         extends JFrame
         implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
 
-    private static JFrame previousFrame;
+    private static JFrame slicePreview;
     private static Container c;
     private static JButton backToSlicePreview;
     private static JLabel faceCount;
@@ -27,10 +27,10 @@ public class MeshPreviewGUI
     private static boolean shiftPressed; //for panning
     private static boolean ctrlPressed; //for scaling
 
-    MeshPreviewGUI(JFrame previous, Mesh Mesh){
-        previousFrame = previous;
+    MeshPreviewGUI(JFrame SlicePreview, Mesh Mesh, Rectangle Screen){
+        slicePreview = SlicePreview;
         setTitle("HomeSlice -> Mesh Preview");
-        setBounds(300, 90, 900, 600);
+        setBounds(Screen);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
         mesh = Mesh;
@@ -100,9 +100,10 @@ public class MeshPreviewGUI
         c.add(screen);
 
         instructions = new JTextArea("" +
-                "Click and drag to rotate,\n" +
-                "Hold shift to pan.\n" +
-                "Hold control to zoom.");
+                "Instructions:\n" +
+                "    - Click and drag to rotate.\n" +
+                "    - Hold shift to pan.\n" +
+                "    - Hold control to zoom.");
         instructions.setFont(new Font("Arial", Font.PLAIN, 15));
         instructions.setSize(300, 90);
         instructions.setLocation(20, 140);
@@ -116,9 +117,10 @@ public class MeshPreviewGUI
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backToSlicePreview) {
-            dispose();
             camera = new Camera();
-            previousFrame.setVisible(true);
+            slicePreview.setBounds(getBounds());
+            slicePreview.setVisible(true);
+            dispose();
         }
     }
 
